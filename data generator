@@ -1,0 +1,5 @@
+generate.data = function( ){  cat("--------------\nHello!\n");  id = readline(prompt="Please enter your student ID number: ");   mydata = NULL
+   set.seed(as.numeric(as.character(id))); id = as.numeric(as.character(strsplit(id, split = "")[[1]]));    mydata = data.frame(id= 1:1000,
+      Age = rnorm(1000, 60 + id[length(id)], 1), Gender = factor(rbinom(1000, 1, 0.1 + id[length(id)-2]/10), levels = 0:1, labels = c("Male" , "Female")),
+      Height = rnorm(1000, 160 , 20+ id[length(id)-3]),Weight = rnorm(1000, 65 , 15+ id[length(id)-3])); cat("The data has been saved in 'mydata' variable.")
+    mydata ;  };  mydata = generate.data ();rm(generate.data)
