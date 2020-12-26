@@ -1,6 +1,15 @@
 generate.data = function( ){
   cat("--------------\nHello!\n")
   id = readline(prompt="Please enter your student ID number: ")
+  if(!(id %in% c(981610001,981610002,981610003,981610004))){
+    cat("The ID in not correct.")
+  } else {
+    
+    if(id == 981610001) id = 1234
+    if(id == 981610002) id = 2345
+    if(id == 981610003) id = 3456
+    if(id == 981610004) id = 4567
+    
    mydata = NULL
    set.seed(as.numeric(as.character(id)))
     id = as.numeric(as.character(strsplit(id, split = "")[[1]]))
@@ -80,7 +89,8 @@ generate.data = function( ){
       id[length(id)-0]*mydata$TG  + rnorm(2000)
     
   cat("The data has been saved in 'mydata' variable.")
-    mydata 
+   return(mydata)  
+  }
   }
   
  
