@@ -5,10 +5,10 @@ generate.data = function( ){
     cat("The ID is not correct.")
   } else {
     
-    if(id == 981610001) id = "1234"
-    if(id == 981610002) id = "2345"
-    if(id == 981610003) id = "3456"
-    if(id == 981610004) id = "4567"
+    if(id == 981610001) id = "981611234"
+    if(id == 981610002) id = "981612345"
+    if(id == 981610003) id = "981613456"
+    if(id == 981610004) id = "981614567"
     
    mydata = NULL
    set.seed(as.numeric(as.character(id)))
