@@ -1,5 +1,91 @@
-generate.data = function( ){  cat("--------------\nHello!\n");  id = readline(prompt="Please enter your student ID number: ");   mydata = NULL
-   set.seed(as.numeric(as.character(id))); id = as.numeric(as.character(strsplit(id, split = "")[[1]]));    mydata = data.frame(id= 1:1000,
-      Age = rnorm(1000, 60 + id[length(id)], 1), Gender = factor(rbinom(1000, 1, 0.1 + id[length(id)-2]/10), levels = 0:1, labels = c("Male" , "Female")),
-      Height = rnorm(1000, 160 , 20+ id[length(id)-3]),Weight = rnorm(1000, 65 , 15+ id[length(id)-3])); cat("The data has been saved in 'mydata' variable.")
-    mydata ;  };  mydata = generate.data ();rm(generate.data)
+generate.data = function( ){
+  cat("--------------\nHello!\n")
+  id = readline(prompt="Please enter your student ID number: ")
+   mydata = NULL
+   set.seed(as.numeric(as.character(id)))
+    id = as.numeric(as.character(strsplit(id, split = "")[[1]]))
+    
+    
+     
+     rbvn<-function (n, mu1, s1, mu2, s2, rho)
+     {
+       X1 <- rnorm(n, mu1, s1)
+       X2 <- rnorm(n, mu2 + (s2/s1) * rho *
+                     (X1 - mu1), sqrt((1 - rho^2)*s2^2))
+       cbind(X1, X2)
+     }
+     
+      cov =  max(id[-(1:(length(id)-4))])/10
+     BPDS <- rbvn(200,mu1=7,s1=1,mu2=10,s2=1,rho=cov)
+       
+     
+     
+    mydata = data.frame(
+      id= 1:2000,
+      Group = factor(
+        rep(0:1, c(1000,1000)), 
+        levels = 0:1, labels = c("Normal" , "Diabetic")),
+      
+      Age = c(rnorm(1000, 60 + id[length(id)], 1),
+              rnorm(1000, 53 - id[length(id)], 1)
+              ),
+      
+      
+   Gender = factor(
+          c(rbinom(1000, 1, 0.5 ),
+            rbinom(1000, 1, 0.1 + id[length(id)-2]/10)), 
+                      levels = 0:1, labels = c("Male" , "Female")),
+      
+    Height = c(rnorm(1000, 160+ id[length(id)-3 ], 20),
+               rnorm(1000, 160+ id[length(id)-3 ],20)),
+    Weight = c(rnorm(1000, 65- id[length(id)-2 ], 15),
+               rnorm(1000, 65+ id[length(id)-2 ], 15)),     
+   Duration   = c(rnorm(1000, 3+ min(id[-(1:(length(id)-4))]) , 2),
+                    rnorm(1000, 7+ min(id[-(1:(length(id)-4))]) , 1)), 
+   
+   HbA1c = c(rnorm(1000, 3+ min(id[-(1:(length(id)-4))]) , 1),
+              rnorm(1000, 5+ min(id[-(1:(length(id)-4))]) , 1.5)),   
+      
+   TG = c(rnorm(1000, 150+ max(id[-(1:(length(id)-4))]) , 10),
+             rnorm(1000, 170+ max(id[-(1:(length(id)-4))]) , 15)), 
+   
+   HDL = c(rnorm(1000, 44+ min(id[-(1:(length(id)-4))]) , 5),
+             rnorm(1000, 35+ min(id[-(1:(length(id)-4))]) , 5)),   
+   LDL = c(rnorm(1000, 95+ min(id[-(1:(length(id)-4))]) , 5),
+             rnorm(1000, 110+ min(id[-(1:(length(id)-4))]) , 10)),   
+   BPS =BPDS [,2]  ,
+   
+   BPD = BPDS[,1] ,   
+   
+   Blood= factor(c(rbinom(1000,3,0.5),rbinom(1000,3,.8)),
+                  levels = 0:3,
+                  labels =c("A","B","AB","O"))  ,
+   Job = factor(
+     c(rbinom(1000, 1, .8 ),
+       rbinom(1000, 1, 0.1 + id[length(id)-2]/10)), 
+     levels = 0:1, labels = c("No Physical Activity" ,
+                              "Physical Activity")),
+   
+   Education= factor(c(rbinom(1000,2,0.5),rbinom(1000,2,0.5)),
+                  levels = 0:2,
+                  labels =c("Non-Academic",
+                            "Under Graduate",
+                            "Post Graduate"))   
+    )
+    
+    mydata$HbA1c  = 
+      id[length(id)-3]*(c(mydata$Group)-1) + 
+      id[length(id)-2]*(c(mydata$Gender)-1) + 
+      id[length(id)-1]*mydata$Age +
+      id[length(id)-0]*mydata$TG  + rnorm(2000)
+    
+  cat("The data has been saved in 'mydata' variable.")
+    mydata 
+  }
+  
+ 
+
+
+mydata = generate.data ()
+rm(generate.data)
+ 
