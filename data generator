@@ -96,5 +96,6 @@ generate.data = function( ){
  
  
 mydata = generate.data ()
+View(mydata)
 rm(generate.data)
  
