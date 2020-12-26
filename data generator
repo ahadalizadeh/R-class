@@ -82,11 +82,11 @@ generate.data = function( ){
                             "Post Graduate"))   
     )
     
-    mydata$HbA1c  = 
+    mydata$HbA1c  = (-6+
       id[length(id)-3]*(c(mydata$Group)-1) + 
       id[length(id)-2]*(c(mydata$Gender)-1) + 
       id[length(id)-1]*mydata$Age +
-      id[length(id)-0]*mydata$TG  + rnorm(2000)
+      id[length(id)-0]*mydata$TG  + rnorm(2000))/100
     
   cat("The data has been saved in 'mydata' variable.")
    return(mydata)  
@@ -94,8 +94,7 @@ generate.data = function( ){
   }
   
  
-
-
+ 
 mydata = generate.data ()
 rm(generate.data)
  
